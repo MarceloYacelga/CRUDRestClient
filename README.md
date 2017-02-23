@@ -51,13 +51,15 @@ Basta con explicar las funcionalidades del sistema.
 
 #### Creación de la base de datos, usuarios y las tablas
 
-Creación de la base de datos y carga inicial: [https://www.youtube.com/watch?v=pPQ5Ul2-RFs](https://www.youtube.com/watch?v=pPQ5Ul2-RFs)
+Creación de la base de datos y carga inicial: 
+[![Creación de la base de datos y carga inicial](http://img.youtube.com/vi/pPQ5Ul2-RFs/0.jpg)](http://www.youtube.com/watch?v=pPQ5Ul2-RFs)
 
 Código fuente: [CargaInicial.sql](https://github.com/juangualberto/GA-JPA/blob/master/src/java/CargaInicial.sql)
 
 #### Creación del servicio REST con Netbeans
 
-Videotutorial: [https://www.youtube.com/watch?v=kZQ60EW6gLg](https://www.youtube.com/watch?v=kZQ60EW6gLg)
+Videotutorial: 
+[![Creación del servicio REST](http://img.youtube.com/vi/kZQ60EW6gLg/0.jpg)](http://www.youtube.com/watch?v=kZQ60EW6gLg)
 
 ## Creación del cliente
 
