@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<!--HTML5 doctype-->
+<html>
+
+<head>
+
+    <title>App Framework Kitchen Sink</title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta HTTP-EQUIV="Pragma" CONTENT="no-cache" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <link rel="stylesheet" type="text/css" href="lib/appframework/icons.css" />
+    <link rel="stylesheet" type="text/css" href="lib/appframework/af.ui.css" />
+
+    <script type="text/javascript" charset="utf-8" src="lib/jquery.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="lib/fastclick.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="lib/appframework/appframework.ui.min.js"></script>
+        
+    <script src='cordova.js'></script>
+    
+    <script src="lib/alumno.js"> </script>
+    <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/styles.css" />
+
+</head>
+
+<body>
+    <div id="splashscreen" class='ui-loader heavy'>
+        App Framework
+        <br>
+        <br>
+        <span class='ui-icon ui-icon-loading spin'></span>
+        <h1>Starting app</h1>
+    </div>
+
+    <div class="view splitview">
+        
+        <header>
+            <a class="menuButton" data-left-menu="left" data-transition="cover" style="float:left"></a>
+            <h1>Title</h1>
+        </header>
+        
+        <div class="pages">
+            <div class="panel" id="main" data-title="Inicio" data-selected="true">
+                <h1>Alumno CRUD</h1>
+                <p>Ejemplo de APP híbrida que produce/consume un servicio REST</p>
+            </div>
+            <div class="panel" id="c_alumno" data-title="Create Alumno">
+                <h1>Create Alumno</h1>
+                 <form>
+                  <div>
+                    <label for="c_al_nombre">Nombre del alumno:</label>
+                    <input type="text" id="c_al_nombre">
+                  </div>
+                  <div>
+                    <label for="c_al_apellidos">Apellidos del alumno:</label>
+                    <input type="text" id="c_al_apellidos">
+                  </div>
+                  <div>
+                    <button class="btn btn-danger" onclick="AlumnoCreateREST()">Enviar!</button>
+                  </div>
+                </form>
+            </div>
+            <div class="panel" id="r_alumno" data-title="Read Alumno">
+                <h1>Read Alumno</h1>
+            </div>
+            <div class="panel" id="u_alumno" data-title="Update Alumno">
+                <h1>Update Alumno</h1>
+            </div>
+            <div class="panel" id="d_alumno" data-title="Delete Alumno">
+                <h1>Delete Alumno</h1>
+            </div>
+        </div>
+
+        <nav id="left">
+            <div class="view active">
+                <header>
+                    <h1>Left</h1>
+                </header>
+                <div class="pages">
+                    <div class="panel active" id="navPage1" data-title="Foobar">
+                        <ul class="list">
+                            <li><a href="#main" onclick="$.afui.clearHistory()">Inicio</a></li>
+                            <li><a href="#c_alumno" onclick="$.afui.clearHistory();alumno.AlumnoCreateREST();">Crear Alumno</a></li>
+                            <li><a href="#r_alumno" onclick="$.afui.clearHistory();alumno.AlumnoReadREST();">Leer Alumno</a></li>
+                            <li><a href="#u_alumno" onclick="$.afui.clearHistory();alumno.AlumnoUpdateREST()">Actualizar Alumno</a></li>
+                            <li><a href="#d_alumno" onclick="$.afui.clearHistory();alumno.AlumnoDeleteREST()">Borrar Alumno</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+    </div>
+</body>
+
+</html>
