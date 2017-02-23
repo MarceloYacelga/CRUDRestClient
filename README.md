@@ -21,15 +21,15 @@ Nos basta con una escueta documentación, aunque sí vamos a necesitar varios di
 
 ### Casos de uso
 
-![](./Screenshot_20170219_215302.png)
+![](Screenshot_20170219_215302.png)
 
 ### Diagrama entidad/relación
 
-![](./Captura%20de%20pantalla_2017-02-19_21-48-56.png)
+![](Captura%20de%20pantalla_2017-02-19_21-48-56.png)
 
 ### Diagrama de clases
 
-![](./Screenshot_20170219_215403.png)
+![](Screenshot_20170219_215403.png)
 
 ### Manual de instalación y configuración
 
@@ -65,113 +65,114 @@ Videotutorial: [https://www.youtube.com/watch?v=kZQ60EW6gLg](https://www.youtube
 
 Ejemplo de fichero JS para hacer
 
-<pre style="color: #000000; background: #f1f0f0;"><span style="color: #c34e00;">/*jslint browser:true, devel:true, white:true, vars:true */</span>
-<span style="color: #c34e00;">/*global $:false, intel:false */</span>
+/*jslint browser:true, devel:true, white:true, vars:true */
+/*global $:false, intel:false */
+```javascript
+function AlumnoReadREST(id) {
+    if ( id=== undefined ) {
+        $.ajax({
+            url: 'http://localhost:8080/GA-JPA/webresources/com.iesvdc.acceso.entidades.alumno',
+            type: 'GET',
+            dataType: 'json',
+            success: function (json) {
+                $('#r_alumno').empty();
+                $('#r_alumno').append('<h3>Listado de Alumnos</h3>');
+                var table = $('<table />').addClass('table table-stripped');
+                table.append($('<thead />').append($('<tr />').append('<th>id</th>', '<th>nombre</th>', '<th>apellidos</th>')));
+                var tbody = $('<tbody />');
+                for (var alumno in json) {
+                    console.log(alumno);
+                    tbody.append($('<tr />').append('<td>' + json[alumno].id + '</td>',
+                                '<td>' + json[alumno].nombre + '</td>', '<td>' + json[alumno].apellido + '</td>'));
+                }
+                table.append(tbody);
+                $('#r_alumno').append( $('<div />').append(table) );
+                $('tr:odd').css('background','#CCCCCC');
+            },
+            error: function (xhr, status) {
+                console.log('Disculpe, existió un problema');
+            }
+        });
+    }
+}
+```
 
-<span style="color: #400000; font-weight: bold;">function</span> <span style="text-decoration: underline;">**AlumnoReadREST**</span><span style="color: #806030;">(</span>id<span style="color: #806030;">)</span> <span style="color: #806030;">{</span>
-    <span style="color: #400000; font-weight: bold;">if</span> <span style="color: #806030;">(</span> id<span style="color: #806030;">===</span> <span style="color: #0f4d75;">undefined</span> <span style="color: #806030;">)</span> <span style="color: #806030;">{</span>
-        $<span style="color: #806030;">.</span>ajax<span style="color: #806030;">(</span><span style="color: #806030;">{</span>
-            url<span style="color: #806030;">:</span> <span style="color: #800000;">'</span><span style="color: #e60000;">http://localhost:8080/GA-JPA/webresources/com.iesvdc.acceso.entidades.alumno</span><span style="color: #800000;">'</span><span style="color: #806030;">,</span>
-            type<span style="color: #806030;">:</span> <span style="color: #800000;">'</span><span style="color: #e60000;">GET</span><span style="color: #800000;">'</span><span style="color: #806030;">,</span>
-            dataType<span style="color: #806030;">:</span> <span style="color: #800000;">'</span><span style="color: #e60000;">json</span><span style="color: #800000;">'</span><span style="color: #806030;">,</span>
-            success<span style="color: #806030;">:</span> <span style="color: #400000; font-weight: bold;">function</span> <span style="color: #806030;">(</span>json<span style="color: #806030;">)</span> <span style="color: #806030;">{</span>
-                $<span style="color: #806030;">(</span><span style="color: #800000;">'</span><span style="color: #e60000;">#r_alumno</span><span style="color: #800000;">'</span><span style="color: #806030;">)</span><span style="color: #806030;">.</span>empty();
-                $<span style="color: #806030;">(</span><span style="color: #800000;">'</span><span style="color: #e60000;">#r_alumno</span><span style="color: #800000;">'</span><span style="color: #806030;">)</span><span style="color: #806030;">.</span>append<span style="color: #806030;">(</span><span style="color: #800000;">'</span><span style="color: #e60000;"><h3>Listado de Alumnos</h3></span><span style="color: #800000;">'</span><span style="color: #806030;">)</span><span style="color: #806030;">;</span>
-                <span style="color: #400000; font-weight: bold;">var</span> table <span style="color: #806030;">=</span> $<span style="color: #806030;">(</span><span style="color: #800000;">'</span><span style="color: #e60000;"><table /></span><span style="color: #800000;">'</span><span style="color: #806030;">)</span><span style="color: #806030;">.</span>addClass<span style="color: #806030;">(</span><span style="color: #800000;">'</span><span style="color: #e60000;">table table-stripped</span><span style="color: #800000;">'</span><span style="color: #806030;">)</span><span style="color: #806030;">;</span>
-                table<span style="color: #806030;">.</span>append<span style="color: #806030;">(</span>$<span style="color: #806030;">(</span><span style="color: #800000;">'</span><span style="color: #e60000;"><thead /></span><span style="color: #800000;">'</span><span style="color: #806030;">)</span><span style="color: #806030;">.</span>append<span style="color: #806030;">(</span>$<span style="color: #806030;">(</span><span style="color: #800000;">'</span><span style="color: #e60000;"><tr /></span><span style="color: #800000;">'</span><span style="color: #806030;">)</span><span style="color: #806030;">.</span>append<span style="color: #806030;">(</span><span style="color: #800000;">'</span><span style="color: #e60000;"><th>id</th></span><span style="color: #800000;">'</span><span style="color: #806030;">,</span> <span style="color: #800000;">'</span><span style="color: #e60000;"><th>nombre</th></span><span style="color: #800000;">'</span><span style="color: #806030;">,</span> <span style="color: #800000;">'</span><span style="color: #e60000;"><th>apellidos</th></span><span style="color: #800000;">'</span><span style="color: #806030;">)</span><span style="color: #806030;">)</span><span style="color: #806030;">)</span><span style="color: #806030;">;</span>
-                <span style="color: #400000; font-weight: bold;">var</span> tbody <span style="color: #806030;">=</span> $<span style="color: #806030;">(</span><span style="color: #800000;">'</span><span style="color: #e60000;"><tbody /></span><span style="color: #800000;">'</span><span style="color: #806030;">)</span><span style="color: #806030;">;</span>
-                <span style="color: #400000; font-weight: bold;">for</span> <span style="color: #806030;">(</span><span style="color: #400000; font-weight: bold;">var</span> alumno <span style="color: #400000; font-weight: bold;">in</span> json<span style="color: #806030;">)</span> <span style="color: #806030;">{</span>
-                    console<span style="color: #806030;">.</span><span style="color: #400000; font-weight: bold;">log</span><span style="color: #806030;">(</span>alumno<span style="color: #806030;">)</span><span style="color: #806030;">;</span>
-                    tbody<span style="color: #806030;">.</span>append<span style="color: #806030;">(</span>$<span style="color: #806030;">(</span><span style="color: #800000;">'</span><span style="color: #e60000;"><tr /></span><span style="color: #800000;">'</span><span style="color: #806030;">)</span><span style="color: #806030;">.</span>append<span style="color: #806030;">(</span><span style="color: #800000;">'</span><span style="color: #e60000;"><td></span><span style="color: #800000;">'</span> <span style="color: #806030;">+</span> json<span style="color: #806030;">[</span>alumno<span style="color: #806030;">]</span><span style="color: #806030;">.</span>id <span style="color: #806030;">+</span> <span style="color: #800000;">'</span><span style="color: #e60000;"></td></span><span style="color: #800000;">'</span><span style="color: #806030;">,</span>
-                                <span style="color: #800000;">'</span><span style="color: #e60000;"><td></span><span style="color: #800000;">'</span> <span style="color: #806030;">+</span> json<span style="color: #806030;">[</span>alumno<span style="color: #806030;">]</span><span style="color: #806030;">.</span>nombre <span style="color: #806030;">+</span> <span style="color: #800000;">'</span><span style="color: #e60000;"></td></span><span style="color: #800000;">'</span><span style="color: #806030;">,</span> <span style="color: #800000;">'</span><span style="color: #e60000;"><td></span><span style="color: #800000;">'</span> <span style="color: #806030;">+</span> json<span style="color: #806030;">[</span>alumno<span style="color: #806030;">]</span><span style="color: #806030;">.</span>apellido <span style="color: #806030;">+</span> <span style="color: #800000;">'</span><span style="color: #e60000;"></td></span><span style="color: #800000;">'</span><span style="color: #806030;">)</span><span style="color: #806030;">)</span><span style="color: #806030;">;</span>
-                <span style="color: #806030;">}</span>
-                table<span style="color: #806030;">.</span>append<span style="color: #806030;">(</span>tbody<span style="color: #806030;">)</span><span style="color: #806030;">;</span>
-                $<span style="color: #806030;">(</span><span style="color: #800000;">'</span><span style="color: #e60000;">#r_alumno</span><span style="color: #800000;">'</span><span style="color: #806030;">)</span><span style="color: #806030;">.</span>append<span style="color: #806030;">(</span> $<span style="color: #806030;">(</span><span style="color: #800000;">'</span><span style="color: #e60000;"><div /></span><span style="color: #800000;">'</span><span style="color: #806030;">)</span><span style="color: #806030;">.</span>append<span style="color: #806030;">(</span>table<span style="color: #806030;">)</span> <span style="color: #806030;">)</span><span style="color: #806030;">;</span>
-                $<span style="color: #806030;">(</span><span style="color: #800000;">'</span><span style="color: #e60000;">tr:odd</span><span style="color: #800000;">'</span><span style="color: #806030;">)</span><span style="color: #806030;">.</span>css<span style="color: #806030;">(</span><span style="color: #800000;">'</span><span style="color: #e60000;">background</span><span style="color: #800000;">'</span><span style="color: #806030;">,</span><span style="color: #800000;">'</span><span style="color: #e60000;">#CCCCCC</span><span style="color: #800000;">'</span><span style="color: #806030;">)</span><span style="color: #806030;">;</span>
-            <span style="color: #806030;">}</span><span style="color: #806030;">,</span>
-            error<span style="color: #806030;">:</span> <span style="color: #400000; font-weight: bold;">function</span> <span style="color: #806030;">(</span>xhr<span style="color: #806030;">,</span> status<span style="color: #806030;">)</span> <span style="color: #806030;">{</span>
-                console<span style="color: #806030;">.</span><span style="color: #400000; font-weight: bold;">log</span><span style="color: #806030;">(</span><span style="color: #800000;">'</span><span style="color: #e60000;">Disculpe, existió un problema</span><span style="color: #800000;">'</span><span style="color: #806030;">)</span><span style="color: #806030;">;</span>
-            <span style="color: #806030;">}</span>
-        <span style="color: #806030;">}</span><span style="color: #806030;">)</span><span style="color: #806030;">;</span>
-    <span style="color: #806030;">}</span>
-<span style="color: #806030;">}</span>
-</pre>
 
 ### Intel XDK
 
 Ejemplo de menús de aplicación con Intel XDK.
 
-<pre style="color: #000000; background: #f1f0f0;"><span style="color: #004a43;"><!DOCTYPE html></span>
-<span style="color: #c34e00;"><!--HTML5 doctype--></span>
-<span style="color: #a65700;"><</span><span style="color: #400000; font-weight: bold;">html</span><span style="color: #a65700;">></span>
-<span style="color: #a65700;"><</span><span style="color: #400000; font-weight: bold;">head</span><span style="color: #a65700;">></span>
-    <span style="color: #a65700;"><</span><span style="color: #400000; font-weight: bold;">title</span><span style="color: #a65700;">></span>App Framework Kitchen Sink<span style="color: #a65700;"></</span><span style="color: #400000; font-weight: bold;">title</span><span style="color: #a65700;">></span>
-    <span style="color: #a65700;"><</span><span style="color: #400000; font-weight: bold;">meta</span> <span style="color: #074726;"></span> <span style="color: #074726;">http-equiv</span><span style="color: #806030;">=</span><span style="color: #e60000;">"Content-type"</span> <span style="color: #074726;"></span> <span style="color: #074726;">content</span><span style="color: #806030;">=</span><span style="color: #e60000;">"text/html; charset=utf-8"</span><span style="color: #a65700;">></span>
-    <span style="color: #a65700;"><</span><span style="color: #400000; font-weight: bold;">meta</span> <span style="color: #074726;"></span> <span style="color: #074726;">name</span><span style="color: #806030;">=</span><span style="color: #e60000;">"viewport"</span> <span style="color: #074726;"></span> <span style="color: #074726;">content</span><span style="color: #806030;">=</span><span style="color: #e60000;">"width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, minimal-ui"</span><span style="color: #a65700;">></span>
-    <span style="color: #a65700;"><</span><span style="color: #400000; font-weight: bold;">meta</span> <span style="color: #074726;"></span> <span style="color: #074726;">name</span><span style="color: #806030;">=</span><span style="color: #e60000;">"apple-mobile-web-app-capable"</span> <span style="color: #074726;"></span> <span style="color: #074726;">content</span><span style="color: #806030;">=</span><span style="color: #e60000;">"yes"</span> <span style="color: #074726;"></span> <span style="color: #a65700;">/></span>
-    <span style="color: #a65700;"><</span><span style="color: #400000; font-weight: bold;">meta</span> <span style="color: #074726;"></span> <span style="color: #074726;">HTTP-EQUIV</span><span style="color: #806030;">=</span><span style="color: #e60000;">"Pragma"</span> <span style="color: #074726;"></span> <span style="color: #074726;">CONTENT</span><span style="color: #806030;">=</span><span style="color: #e60000;">"no-cache"</span> <span style="color: #074726;"></span> <span style="color: #a65700;">/></span>
-    <span style="color: #a65700;"><</span><span style="color: #400000; font-weight: bold;">meta</span> <span style="color: #074726;"></span> <span style="color: #074726;">http-equiv</span><span style="color: #806030;">=</span><span style="color: #e60000;">"X-UA-Compatible"</span> <span style="color: #074726;"></span> <span style="color: #074726;">content</span><span style="color: #806030;">=</span><span style="color: #e60000;">"IE=edge"</span> <span style="color: #074726;"></span> <span style="color: #a65700;">/></span>
-    <span style="color: #a65700;"><</span><span style="color: #400000; font-weight: bold;">link</span> <span style="color: #074726;"></span> <span style="color: #074726;">rel</span><span style="color: #806030;">=</span><span style="color: #e60000;">"stylesheet"</span> <span style="color: #074726;"></span> <span style="color: #074726;">type</span><span style="color: #806030;">=</span><span style="color: #e60000;">"text/css"</span> <span style="color: #074726;"></span> <span style="color: #074726;">href</span><span style="color: #806030;">=</span><span style="color: #e60000;">"lib/appframework/icons.css"</span> <span style="color: #074726;"></span> <span style="color: #a65700;">/></span>
-    <span style="color: #a65700;"><</span><span style="color: #400000; font-weight: bold;">link</span> <span style="color: #074726;"></span> <span style="color: #074726;">rel</span><span style="color: #806030;">=</span><span style="color: #e60000;">"stylesheet"</span> <span style="color: #074726;"></span> <span style="color: #074726;">type</span><span style="color: #806030;">=</span><span style="color: #e60000;">"text/css"</span> <span style="color: #074726;"></span> <span style="color: #074726;">href</span><span style="color: #806030;">=</span><span style="color: #e60000;">"lib/appframework/af.ui.css"</span> <span style="color: #074726;"></span> <span style="color: #a65700;">/></span>
-    <span style="color: #a65700;"><</span><span style="color: #400000; font-weight: bold;">script</span> <span style="color: #074726;"></span> <span style="color: #074726;">type</span><span style="color: #806030;">=</span><span style="color: #e60000;">"text/javascript"</span> <span style="color: #074726;"></span> <span style="color: #074726;">charset</span><span style="color: #806030;">=</span><span style="color: #e60000;">"utf-8"</span> <span style="color: #074726;"></span> <span style="color: #074726;">src</span><span style="color: #806030;">=</span><span style="color: #e60000;">"lib/jquery.min.js"</span><span style="color: #a65700;">></span><span style="color: #a65700;"></</span><span style="color: #400000; font-weight: bold;">script</span><span style="color: #a65700;">></span>
-    <span style="color: #a65700;"><</span><span style="color: #400000; font-weight: bold;">script</span> <span style="color: #074726;"></span> <span style="color: #074726;">type</span><span style="color: #806030;">=</span><span style="color: #e60000;">"text/javascript"</span> <span style="color: #074726;"></span> <span style="color: #074726;">charset</span><span style="color: #806030;">=</span><span style="color: #e60000;">"utf-8"</span> <span style="color: #074726;"></span> <span style="color: #074726;">src</span><span style="color: #806030;">=</span><span style="color: #e60000;">"lib/fastclick.min.js"</span><span style="color: #a65700;">></span><span style="color: #a65700;"></</span><span style="color: #400000; font-weight: bold;">script</span><span style="color: #a65700;">></span>
-    <span style="color: #a65700;"><</span><span style="color: #400000; font-weight: bold;">script</span> <span style="color: #074726;"></span> <span style="color: #074726;">type</span><span style="color: #806030;">=</span><span style="color: #e60000;">"text/javascript"</span> <span style="color: #074726;"></span> <span style="color: #074726;">charset</span><span style="color: #806030;">=</span><span style="color: #e60000;">"utf-8"</span> <span style="color: #074726;"></span> <span style="color: #074726;">src</span><span style="color: #806030;">=</span><span style="color: #e60000;">"lib/appframework/appframework.ui.min.js"</span><span style="color: #a65700;">></span><span style="color: #a65700;"></</span><span style="color: #400000; font-weight: bold;">script</span><span style="color: #a65700;">></span>
-    <span style="color: #a65700;"><</span><span style="color: #400000; font-weight: bold;">script</span> <span style="color: #074726;"></span> <span style="color: #074726;">src</span><span style="color: #806030;">=</span><span style="color: #e60000;">'cordova.js'</span><span style="color: #a65700;">></span><span style="color: #a65700;"></</span><span style="color: #400000; font-weight: bold;">script</span><span style="color: #a65700;">></span>
-    <span style="color: #a65700;"><</span><span style="color: #400000; font-weight: bold;">script</span> <span style="color: #074726;"></span> <span style="color: #074726;">src</span><span style="color: #806030;">=</span><span style="color: #e60000;">"lib/alumno.js"</span><span style="color: #a65700;">></span> <span style="color: #a65700;"></</span><span style="color: #400000; font-weight: bold;">script</span><span style="color: #a65700;">></span>
-<span style="color: #a65700;"></</span><span style="color: #400000; font-weight: bold;">head</span><span style="color: #a65700;">></span>
-<span style="color: #a65700;"><</span><span style="color: #400000; font-weight: bold;">body</span><span style="color: #a65700;">></span>
-    <span style="color: #a65700;"><</span><span style="color: #400000; font-weight: bold;">div</span> <span style="color: #074726;"></span> <span style="color: #074726;">id</span><span style="color: #806030;">=</span><span style="color: #e60000;">"splashscreen"</span> <span style="color: #074726;"></span> <span style="color: #074726;">class</span><span style="color: #806030;">=</span><span style="color: #e60000;">'ui-loader heavy'</span><span style="color: #a65700;">></span>
+```html 
+<!DOCTYPE html>
+<!--HTML5 doctype-->
+<html>
+<head>
+    <title>App Framework Kitchen Sink</title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta HTTP-EQUIV="Pragma" CONTENT="no-cache" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="stylesheet" type="text/css" href="lib/appframework/icons.css" />
+    <link rel="stylesheet" type="text/css" href="lib/appframework/af.ui.css" />
+    <script type="text/javascript" charset="utf-8" src="lib/jquery.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="lib/fastclick.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="lib/appframework/appframework.ui.min.js"></script>
+    <script src='cordova.js'></script>
+    <script src="lib/alumno.js"> </script>
+</head>
+<body>
+    <div id="splashscreen" class='ui-loader heavy'>
         App Framework
-        <span style="color: #a65700;"><</span><span style="color: #400000; font-weight: bold;">br</span><span style="color: #a65700;">></span>
-        <span style="color: #a65700;"><</span><span style="color: #400000; font-weight: bold;">span</span> <span style="color: #074726;"></span> <span style="color: #074726;">class</span><span style="color: #806030;">=</span><span style="color: #e60000;">'ui-icon ui-icon-loading spin'</span><span style="color: #a65700;">></span><span style="color: #a65700;"></</span><span style="color: #400000; font-weight: bold;">span</span><span style="color: #a65700;">></span>
-        <span style="color: #a65700;"><</span><span style="color: #400000; font-weight: bold;">h1</span><span style="color: #a65700;">></span>Starting app<span style="color: #a65700;"></</span><span style="color: #400000; font-weight: bold;">h1</span><span style="color: #a65700;">></span>
-    <span style="color: #a65700;"></</span><span style="color: #400000; font-weight: bold;">div</span><span style="color: #a65700;">></span>
-    <span style="color: #a65700;"><</span><span style="color: #400000; font-weight: bold;">div</span> <span style="color: #074726;"></span> <span style="color: #074726;">class</span><span style="color: #806030;">=</span><span style="color: #e60000;">"view splitview"</span><span style="color: #a65700;">></span>        
-        <span style="color: #a65700;"><</span><span style="color: #400000; font-weight: bold;">header</span><span style="color: #a65700;">></span>
-            <span style="color: #a65700;"><</span><span style="color: #400000; font-weight: bold;">a</span> <span style="color: #074726;"></span> <span style="color: #074726;">class</span><span style="color: #806030;">=</span><span style="color: #e60000;">"menuButton"</span> <span style="color: #074726;"></span> <span style="color: #074726;">data</span><span style="color: #074726;">-</span><span style="color: #074726;">left</span><span style="color: #074726;">-menu</span><span style="color: #806030;">=</span><span style="color: #e60000;">"left"</span> <span style="color: #074726;"></span> <span style="color: #074726;">data</span><span style="color: #074726;">-transition</span><span style="color: #806030;">=</span><span style="color: #e60000;">"cover"</span> <span style="color: #074726;"></span> <span style="color: #074726;">style</span><span style="color: #806030;">=</span><span style="color: #e60000;">"</span><span style="color: #bb7977; font-weight: bold;">float</span><span style="color: #806030;">:</span><span style="color: #074726;">left</span><span style="color: #e60000;">"</span><span style="color: #a65700;">></span><span style="color: #a65700;"></</span><span style="color: #400000; font-weight: bold;">a</span><span style="color: #a65700;">></span>
-            <span style="color: #a65700;"><</span><span style="color: #400000; font-weight: bold;">h1</span><span style="color: #a65700;">></span>Title<span style="color: #a65700;"></</span><span style="color: #400000; font-weight: bold;">h1</span><span style="color: #a65700;">></span>
-        <span style="color: #a65700;"></</span><span style="color: #400000; font-weight: bold;">header</span><span style="color: #a65700;">></span>        
-        <span style="color: #a65700;"><</span><span style="color: #400000; font-weight: bold;">div</span> <span style="color: #074726;"></span> <span style="color: #074726;">class</span><span style="color: #806030;">=</span><span style="color: #e60000;">"pages"</span><span style="color: #a65700;">></span>
-            <span style="color: #a65700;"><</span><span style="color: #400000; font-weight: bold;">div</span> <span style="color: #074726;"></span> <span style="color: #074726;">class</span><span style="color: #806030;">=</span><span style="color: #e60000;">"panel"</span> <span style="color: #074726;"></span> <span style="color: #074726;">id</span><span style="color: #806030;">=</span><span style="color: #e60000;">"main"</span> <span style="color: #074726;"></span> <span style="color: #074726;">data</span><span style="color: #074726;">-</span><span style="color: #074726;">title</span><span style="color: #806030;">=</span><span style="color: #e60000;">"Inicio"</span> <span style="color: #074726;"></span> <span style="color: #074726;">data</span><span style="color: #074726;">-</span><span style="color: #074726;">selected</span><span style="color: #806030;">=</span><span style="color: #e60000;">"true"</span><span style="color: #a65700;">></span>
-                <span style="color: #a65700;"><</span><span style="color: #400000; font-weight: bold;">h1</span><span style="color: #a65700;">></span>Alumno CRUD<span style="color: #a65700;"></</span><span style="color: #400000; font-weight: bold;">h1</span><span style="color: #a65700;">></span>
-                <span style="color: #a65700;"><</span><span style="color: #400000; font-weight: bold;">p</span><span style="color: #a65700;">></span>Ejemplo de APP híbrida que produce/consume un servicio REST<span style="color: #a65700;"></</span><span style="color: #400000; font-weight: bold;">p</span><span style="color: #a65700;">></span>
-            <span style="color: #a65700;"></</span><span style="color: #400000; font-weight: bold;">div</span><span style="color: #a65700;">></span>
-            <span style="color: #a65700;"><</span><span style="color: #400000; font-weight: bold;">div</span> <span style="color: #074726;"></span> <span style="color: #074726;">class</span><span style="color: #806030;">=</span><span style="color: #e60000;">"panel"</span> <span style="color: #074726;"></span> <span style="color: #074726;">id</span><span style="color: #806030;">=</span><span style="color: #e60000;">"c_alumno"</span> <span style="color: #074726;"></span> <span style="color: #074726;">data</span><span style="color: #074726;">-</span><span style="color: #074726;">title</span><span style="color: #806030;">=</span><span style="color: #e60000;">"Create Alumno"</span><span style="color: #a65700;">></span>
-                <span style="color: #a65700;"><</span><span style="color: #400000; font-weight: bold;">h1</span><span style="color: #a65700;">></span>Create Alumno<span style="color: #a65700;"></</span><span style="color: #400000; font-weight: bold;">h1</span><span style="color: #a65700;">></span>
-            <span style="color: #a65700;"></</span><span style="color: #400000; font-weight: bold;">div</span><span style="color: #a65700;">></span>
-            <span style="color: #a65700;"><</span><span style="color: #400000; font-weight: bold;">div</span> <span style="color: #074726;"></span> <span style="color: #074726;">class</span><span style="color: #806030;">=</span><span style="color: #e60000;">"panel"</span> <span style="color: #074726;"></span> <span style="color: #074726;">id</span><span style="color: #806030;">=</span><span style="color: #e60000;">"<span style="text-decoration: underline;">**r_alumno**</span>"</span> <span style="color: #074726;"></span> <span style="color: #074726;">data</span><span style="color: #074726;">-</span><span style="color: #074726;">title</span><span style="color: #806030;">=</span><span style="color: #e60000;">"Read Alumno"</span><span style="color: #a65700;">></span>
-                <span style="color: #a65700;"><</span><span style="color: #400000; font-weight: bold;">h1</span><span style="color: #a65700;">></span>Read Alumno<span style="color: #a65700;"></</span><span style="color: #400000; font-weight: bold;">h1</span><span style="color: #a65700;">></span>
-            <span style="color: #a65700;"></</span><span style="color: #400000; font-weight: bold;">div</span><span style="color: #a65700;">></span>
-            <span style="color: #a65700;"><</span><span style="color: #400000; font-weight: bold;">div</span> <span style="color: #074726;"></span> <span style="color: #074726;">class</span><span style="color: #806030;">=</span><span style="color: #e60000;">"panel"</span> <span style="color: #074726;"></span> <span style="color: #074726;">id</span><span style="color: #806030;">=</span><span style="color: #e60000;">"u_alumno"</span> <span style="color: #074726;"></span> <span style="color: #074726;">data</span><span style="color: #074726;">-</span><span style="color: #074726;">title</span><span style="color: #806030;">=</span><span style="color: #e60000;">"Update Alumno"</span><span style="color: #a65700;">></span>
-                <span style="color: #a65700;"><</span><span style="color: #400000; font-weight: bold;">h1</span><span style="color: #a65700;">></span>Update Alumno<span style="color: #a65700;"></</span><span style="color: #400000; font-weight: bold;">h1</span><span style="color: #a65700;">></span>
-            <span style="color: #a65700;"></</span><span style="color: #400000; font-weight: bold;">div</span><span style="color: #a65700;">></span>
-            <span style="color: #a65700;"><</span><span style="color: #400000; font-weight: bold;">div</span> <span style="color: #074726;"></span> <span style="color: #074726;">class</span><span style="color: #806030;">=</span><span style="color: #e60000;">"panel"</span> <span style="color: #074726;"></span> <span style="color: #074726;">id</span><span style="color: #806030;">=</span><span style="color: #e60000;">"d_alumno"</span> <span style="color: #074726;"></span> <span style="color: #074726;">data</span><span style="color: #074726;">-</span><span style="color: #074726;">title</span><span style="color: #806030;">=</span><span style="color: #e60000;">"Delete Alumno"</span><span style="color: #a65700;">></span>
-                <span style="color: #a65700;"><</span><span style="color: #400000; font-weight: bold;">h1</span><span style="color: #a65700;">></span>Delete Alumno<span style="color: #a65700;"></</span><span style="color: #400000; font-weight: bold;">h1</span><span style="color: #a65700;">></span>
-            <span style="color: #a65700;"></</span><span style="color: #400000; font-weight: bold;">div</span><span style="color: #a65700;">></span>
-        <span style="color: #a65700;"></</span><span style="color: #400000; font-weight: bold;">div</span><span style="color: #a65700;">></span>
-        <span style="color: #a65700;"><</span><span style="color: #400000; font-weight: bold;">nav</span> <span style="color: #074726;"></span> <span style="color: #074726;">id</span><span style="color: #806030;">=</span><span style="color: #e60000;">"left"</span><span style="color: #a65700;">></span>
-            <span style="color: #a65700;"><</span><span style="color: #400000; font-weight: bold;">div</span> <span style="color: #074726;"></span> <span style="color: #074726;">class</span><span style="color: #806030;">=</span><span style="color: #e60000;">"view active"</span><span style="color: #a65700;">></span>
-                <span style="color: #a65700;"><</span><span style="color: #400000; font-weight: bold;">header</span><span style="color: #a65700;">></span>
-                    <span style="color: #a65700;"><</span><span style="color: #400000; font-weight: bold;">h1</span><span style="color: #a65700;">></span>Left<span style="color: #a65700;"></</span><span style="color: #400000; font-weight: bold;">h1</span><span style="color: #a65700;">></span>
-                <span style="color: #a65700;"></</span><span style="color: #400000; font-weight: bold;">header</span><span style="color: #a65700;">></span>
-                <span style="color: #a65700;"><</span><span style="color: #400000; font-weight: bold;">div</span> <span style="color: #074726;"></span> <span style="color: #074726;">class</span><span style="color: #806030;">=</span><span style="color: #e60000;">"pages"</span><span style="color: #a65700;">></span>
-                    <span style="color: #a65700;"><</span><span style="color: #400000; font-weight: bold;">div</span> <span style="color: #074726;"></span> <span style="color: #074726;">class</span><span style="color: #806030;">=</span><span style="color: #e60000;">"panel active"</span> <span style="color: #074726;"></span> <span style="color: #074726;">id</span><span style="color: #806030;">=</span><span style="color: #e60000;">"navPage1"</span> <span style="color: #074726;"></span> <span style="color: #074726;">data</span><span style="color: #074726;">-</span><span style="color: #074726;">title</span><span style="color: #806030;">=</span><span style="color: #e60000;">"Foobar"</span><span style="color: #a65700;">></span>
-                        <span style="color: #a65700;"><</span><span style="color: #400000; font-weight: bold;">ul</span> <span style="color: #074726;"></span> <span style="color: #074726;">class</span><span style="color: #806030;">=</span><span style="color: #e60000;">"list"</span><span style="color: #a65700;">></span>
-                            <span style="color: #a65700;"><</span><span style="color: #400000; font-weight: bold;">li</span><span style="color: #a65700;">></span><span style="color: #a65700;"><</span><span style="color: #400000; font-weight: bold;">a</span> <span style="color: #074726;"></span> <span style="color: #074726;">href</span><span style="color: #806030;">=</span><span style="color: #e60000;">"#main"</span> <span style="color: #074726;"></span> <span style="color: #074726;">onclick</span><span style="color: #806030;">=</span><span style="color: #e60000;">"$.afui.clearHistory()"</span><span style="color: #a65700;">></span>Inicio<span style="color: #a65700;"></</span><span style="color: #400000; font-weight: bold;">a</span><span style="color: #a65700;">></span><span style="color: #a65700;"></</span><span style="color: #400000; font-weight: bold;">li</span><span style="color: #a65700;">></span>
-                            <span style="color: #a65700;"><</span><span style="color: #400000; font-weight: bold;">li</span><span style="color: #a65700;">></span><span style="color: #a65700;"><</span><span style="color: #400000; font-weight: bold;">a</span> <span style="color: #074726;"></span> <span style="color: #074726;">href</span><span style="color: #806030;">=</span><span style="color: #e60000;">"#c_alumno"</span> <span style="color: #074726;"></span> <span style="color: #074726;">onclick</span><span style="color: #806030;">=</span><span style="color: #e60000;">"$.afui.clearHistory()"</span><span style="color: #a65700;">></span>Crear Alumno<span style="color: #a65700;"></</span><span style="color: #400000; font-weight: bold;">a</span><span style="color: #a65700;">></span><span style="color: #a65700;"></</span><span style="color: #400000; font-weight: bold;">li</span><span style="color: #a65700;">></span>
-                            **<span style="color: #a65700;"><</span>**<span style="color: #400000; font-weight: bold;">li</span><span style="color: #a65700;">></span><span style="color: #a65700;"><</span><span style="color: #400000; font-weight: bold;">a</span> <span style="color: #074726;"></span> <span style="color: #074726;">href</span><span style="color: #806030;">=</span><span style="color: #e60000;">"#r_alumno"</span> <span style="color: #074726;"></span> <span style="color: #074726;">onclick</span><span style="color: #806030;">=</span><span style="color: #e60000;">"$.afui.clearHistory();<span style="text-decoration: underline;">**AlumnoReadREST**</span>();"</span><span style="color: #a65700;">></span>Leer Alumno<span style="color: #a65700;"></</span><span style="color: #400000; font-weight: bold;">a</span><span style="color: #a65700;">></span><span style="color: #a65700;"></</span><span style="color: #400000; font-weight: bold;">li</span><span style="color: #a65700;">></span>
-                            <span style="color: #a65700;"><</span><span style="color: #400000; font-weight: bold;">li</span><span style="color: #a65700;">></span><span style="color: #a65700;"><</span><span style="color: #400000; font-weight: bold;">a</span> <span style="color: #074726;"></span> <span style="color: #074726;">href</span><span style="color: #806030;">=</span><span style="color: #e60000;">"#u_alumno"</span> <span style="color: #074726;"></span> <span style="color: #074726;">onclick</span><span style="color: #806030;">=</span><span style="color: #e60000;">"$.afui.clearHistory()"</span><span style="color: #a65700;">></span>Actualizar Alumno<span style="color: #a65700;"></</span><span style="color: #400000; font-weight: bold;">a</span><span style="color: #a65700;">></span><span style="color: #a65700;"></</span><span style="color: #400000; font-weight: bold;">li</span><span style="color: #a65700;">></span>
-                            <span style="color: #a65700;"><</span><span style="color: #400000; font-weight: bold;">li</span><span style="color: #a65700;">></span><span style="color: #a65700;"><</span><span style="color: #400000; font-weight: bold;">a</span> <span style="color: #074726;"></span> <span style="color: #074726;">href</span><span style="color: #806030;">=</span><span style="color: #e60000;">"#d_alumno"</span> <span style="color: #074726;"></span> <span style="color: #074726;">onclick</span><span style="color: #806030;">=</span><span style="color: #e60000;">"$.afui.clearHistory()"</span><span style="color: #a65700;">></span>Borrar Alumno<span style="color: #a65700;"></</span><span style="color: #400000; font-weight: bold;">a</span><span style="color: #a65700;">></span><span style="color: #a65700;"></</span><span style="color: #400000; font-weight: bold;">li</span><span style="color: #a65700;">></span>
-                        <span style="color: #a65700;"></</span><span style="color: #400000; font-weight: bold;">ul</span><span style="color: #a65700;">></span>
-                    <span style="color: #a65700;"></</span><span style="color: #400000; font-weight: bold;">div</span><span style="color: #a65700;">></span>
-                <span style="color: #a65700;"></</span><span style="color: #400000; font-weight: bold;">div</span><span style="color: #a65700;">></span>
-            <span style="color: #a65700;"></</span><span style="color: #400000; font-weight: bold;">div</span><span style="color: #a65700;">></span>
-        <span style="color: #a65700;"></</span><span style="color: #400000; font-weight: bold;">nav</span><span style="color: #a65700;">></span>
-    <span style="color: #a65700;"></</span><span style="color: #400000; font-weight: bold;">div</span><span style="color: #a65700;">></span>
-<span style="color: #a65700;"></</span><span style="color: #400000; font-weight: bold;">body</span><span style="color: #a65700;">></span>
-<span style="color: #a65700;"></</span><span style="color: #400000; font-weight: bold;">html</span><span style="color: #a65700;">></span>
-</pre>
-
+        <br>
+        <span class='ui-icon ui-icon-loading spin'></span>
+        <h1>Starting app</h1>
+    </div>
+    <div class="view splitview">        
+        <header>
+            <a class="menuButton" data-left-menu="left" data-transition="cover" style="float:left"></a>
+            <h1>Title</h1>
+        </header>        
+        <div class="pages">
+            <div class="panel" id="main" data-title="Inicio" data-selected="true">
+                <h1>Alumno CRUD</h1>
+                <p>Ejemplo de APP híbrida que produce/consume un servicio REST</p>
+            </div>
+            <div class="panel" id="c_alumno" data-title="Create Alumno">
+                <h1>Create Alumno</h1>
+            </div>
+            <div class="panel" id="r_alumno" data-title="Read Alumno">
+                <h1>Read Alumno</h1>
+            </div>
+            <div class="panel" id="u_alumno" data-title="Update Alumno">
+                <h1>Update Alumno</h1>
+            </div>
+            <div class="panel" id="d_alumno" data-title="Delete Alumno">
+                <h1>Delete Alumno</h1>
+            </div>
+        </div>
+        <nav id="left">
+            <div class="view active">
+                <header>
+                    <h1>Left</h1>
+                </header>
+                <div class="pages">
+                    <div class="panel active" id="navPage1" data-title="Foobar">
+                        <ul class="list">
+                            <li><a href="#main" onclick="$.afui.clearHistory()">Inicio</a></li>
+                            <li><a href="#c_alumno" onclick="$.afui.clearHistory()">Crear Alumno</a></li>
+                            <li><a href="#r_alumno" onclick="$.afui.clearHistory();AlumnoReadREST();">Leer Alumno</a></li>
+                            <li><a href="#u_alumno" onclick="$.afui.clearHistory()">Actualizar Alumno</a></li>
+                            <li><a href="#d_alumno" onclick="$.afui.clearHistory()">Borrar Alumno</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+</body>
+</html>
+```
 ## Descripción detallada
 
 ### Opción 1: Gestión de pedidos
@@ -212,58 +213,60 @@ No se especifica si se borra un préstamo cuando devolvemos un libro. Puedes hac
 
 #### Pista para usar el lector del framework
 
-<pre style="color: #000000; background: #f1f0f0;"><span style="color: #400000; font-weight: bold;">function</span> scanNow<span style="color: #806030;">(</span><span style="color: #806030;">)</span>
-        <span style="color: #806030;">{</span>
-            <span style="color: #c34e00;">//this function launches the QR Code scanner.</span>
-            intel<span style="color: #806030;">.</span>xdk<span style="color: #806030;">.</span>device<span style="color: #806030;">.</span>scanBarcode<span style="color: #806030;">(</span><span style="color: #806030;">)</span><span style="color: #806030;">;</span>
-        <span style="color: #806030;">}</span>
+```javascript
+function scanNow()
+{
+	//Esta función lanza el QR Code scanner.
+	intel.xdk.device.scanBarcode();
+}
 
-        <span style="color: #c34e00;">//this event is fired when scanning is completed</span>
-        document<span style="color: #806030;">.</span>addEventListener<span style="color: #806030;">(</span><span style="color: #800000;">"</span><span style="color: #e60000;">intel.xdk.device.barcode.scan</span><span style="color: #800000;">"</span><span style="color: #806030;">,</span><span style="color: #400000; font-weight: bold;">function</span><span style="color: #806030;">(</span>evt<span style="color: #806030;">)</span><span style="color: #806030;">{</span>
-            <span style="color: #400000; font-weight: bold;">if</span> <span style="color: #806030;">(</span>evt<span style="color: #806030;">.</span>success <span style="color: #806030;">==</span> <span style="color: #0f4d75;">true</span><span style="color: #806030;">)</span> <span style="color: #806030;">{</span>
-                <span style="color: #c34e00;">//successful scan</span>
+//Este evento se lanza cuando un código es escaneado:
+document.addEventListener("intel.xdk.device.barcode.scan",function(evt){
+	if (evt.success == true) {
+		//successful scan
+	   
+		alert(evt.codedata);
+	}
+	else
+	{
+		//failed scan
+		alert("Please try again");
+	}
+},false);
 
-                <span style="color: #400000; font-weight: bold;">alert</span><span style="color: #806030;">(</span>evt<span style="color: #806030;">.</span>codedata<span style="color: #806030;">)</span><span style="color: #806030;">;</span>
-            <span style="color: #806030;">}</span>
-            <span style="color: #400000; font-weight: bold;">else</span>
-            <span style="color: #806030;">{</span>
-                <span style="color: #c34e00;">//failed scan</span>
-                <span style="color: #400000; font-weight: bold;">alert</span><span style="color: #806030;">(</span><span style="color: #800000;">"</span><span style="color: #e60000;">Please try again</span><span style="color: #800000;">"</span><span style="color: #806030;">)</span><span style="color: #806030;">;</span>
-            <span style="color: #806030;">}</span>
-        <span style="color: #806030;">}</span><span style="color: #806030;">,</span><span style="color: #0f4d75;">false</span><span style="color: #806030;">)</span><span style="color: #806030;">;</span>
-</pre>
+```
 
 ## Solución al problema del CORS
 
 Si queremos usar XML y AJAX, tenemos que habilitar el CORS en nuestros servicios con Tomcat. La manera más usual es creando un filtro:
+```java
+package com.iesvdc.acceso.filtro;
+import java.io.IOException;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletResponse;
 
-<pre style="color: #000000; background: #f1f0f0;"><span style="color: #400000; font-weight: bold;">package</span> <span style="color: #004a43;">com</span><span style="color: #806030;">.</span><span style="color: #004a43;">iesvdc</span><span style="color: #806030;">.</span><span style="color: #004a43;">acceso</span><span style="color: #806030;">.</span><span style="color: #004a43;">filtro</span><span style="color: #806030;">;</span>
-<span style="color: #400000; font-weight: bold;">import</span> <span style="color: #004a43;">java</span><span style="color: #806030;">.</span><span style="color: #004a43;">io</span><span style="color: #806030;">.</span><span style="color: #004a43;">IOException</span><span style="color: #806030;">;</span>
-<span style="color: #400000; font-weight: bold;">import</span> <span style="color: #004a43;">javax</span><span style="color: #806030;">.</span><span style="color: #004a43;">servlet</span><span style="color: #806030;">.</span><span style="color: #004a43;">Filter</span><span style="color: #806030;">;</span>
-<span style="color: #400000; font-weight: bold;">import</span> <span style="color: #004a43;">javax</span><span style="color: #806030;">.</span><span style="color: #004a43;">servlet</span><span style="color: #806030;">.</span><span style="color: #004a43;">FilterChain</span><span style="color: #806030;">;</span>
-<span style="color: #400000; font-weight: bold;">import</span> <span style="color: #004a43;">javax</span><span style="color: #806030;">.</span><span style="color: #004a43;">servlet</span><span style="color: #806030;">.</span><span style="color: #004a43;">FilterConfig</span><span style="color: #806030;">;</span>
-<span style="color: #400000; font-weight: bold;">import</span> <span style="color: #004a43;">javax</span><span style="color: #806030;">.</span><span style="color: #004a43;">servlet</span><span style="color: #806030;">.</span><span style="color: #004a43;">ServletException</span><span style="color: #806030;">;</span>
-<span style="color: #400000; font-weight: bold;">import</span> <span style="color: #004a43;">javax</span><span style="color: #806030;">.</span><span style="color: #004a43;">servlet</span><span style="color: #806030;">.</span><span style="color: #004a43;">ServletRequest</span><span style="color: #806030;">;</span>
-<span style="color: #400000; font-weight: bold;">import</span> <span style="color: #004a43;">javax</span><span style="color: #806030;">.</span><span style="color: #004a43;">servlet</span><span style="color: #806030;">.</span><span style="color: #004a43;">ServletResponse</span><span style="color: #806030;">;</span>
-<span style="color: #400000; font-weight: bold;">import</span> <span style="color: #004a43;">javax</span><span style="color: #806030;">.</span><span style="color: #004a43;">servlet</span><span style="color: #806030;">.</span><span style="color: #004a43;">http</span><span style="color: #806030;">.</span><span style="color: #004a43;">HttpServletResponse</span><span style="color: #806030;">;</span>
+public class SimpleCORSFilter implements Filter {
 
-<span style="color: #400000; font-weight: bold;">public</span> <span style="color: #400000; font-weight: bold;">class</span> SimpleCORSFilter <span style="color: #400000; font-weight: bold;">implements</span> Filter <span style="color: #806030;">{</span>
+ public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
+  HttpServletResponse response = (HttpServletResponse) res;
+  response.setHeader("Access-Control-Allow-Origin", "*");
+  response.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, OPTIONS, DELETE");
+  response.setHeader("Access-Control-Max-Age", "3600");
+  response.setHeader("Access-Control-Allow-Headers", "Origin, x-requested-with, Content-Type, Accept");
+  chain.doFilter(req, res);
+ }
 
- <span style="color: #400000; font-weight: bold;">public</span> <span style="color: #800040;">void</span> doFilter<span style="color: #806030;">(</span>ServletRequest req<span style="color: #806030;">,</span> ServletResponse res<span style="color: #806030;">,</span> FilterChain chain<span style="color: #806030;">)</span> <span style="color: #400000; font-weight: bold;">throws</span> <span style="color: #800040;">IOException</span><span style="color: #806030;">,</span> ServletException <span style="color: #806030;">{</span>
-  HttpServletResponse response <span style="color: #806030;">=</span> <span style="color: #806030;">(</span>HttpServletResponse<span style="color: #806030;">)</span> res<span style="color: #806030;">;</span>
-  response<span style="color: #806030;">.</span>setHeader<span style="color: #806030;">(</span><span style="color: #e60000;">"Access-Control-Allow-Origin"</span><span style="color: #806030;">,</span> <span style="color: #e60000;">"*"</span><span style="color: #806030;">)</span><span style="color: #806030;">;</span>
-  response<span style="color: #806030;">.</span>setHeader<span style="color: #806030;">(</span><span style="color: #e60000;">"Access-Control-Allow-Methods"</span><span style="color: #806030;">,</span> <span style="color: #e60000;">"POST, GET, PUT, OPTIONS, DELETE"</span><span style="color: #806030;">)</span><span style="color: #806030;">;</span>
-  response<span style="color: #806030;">.</span>setHeader<span style="color: #806030;">(</span><span style="color: #e60000;">"Access-Control-Max-Age"</span><span style="color: #806030;">,</span> <span style="color: #e60000;">"3600"</span><span style="color: #806030;">)</span><span style="color: #806030;">;</span>
-  response<span style="color: #806030;">.</span>setHeader<span style="color: #806030;">(</span><span style="color: #e60000;">"Access-Control-Allow-Headers"</span><span style="color: #806030;">,</span> <span style="color: #e60000;">"Origin, x-requested-with, Content-Type, Accept"</span><span style="color: #806030;">)</span><span style="color: #806030;">;</span>
-  chain<span style="color: #806030;">.</span>doFilter<span style="color: #806030;">(</span>req<span style="color: #806030;">,</span> res<span style="color: #806030;">)</span><span style="color: #806030;">;</span>
- <span style="color: #806030;">}</span>
+ public void init(FilterConfig filterConfig) {}
 
- <span style="color: #400000; font-weight: bold;">public</span> <span style="color: #800040;">void</span> init<span style="color: #806030;">(</span>FilterConfig filterConfig<span style="color: #806030;">)</span> <span style="color: #806030;">{</span><span style="color: #806030;">}</span>
-
- <span style="color: #400000; font-weight: bold;">public</span> <span style="color: #800040;">void</span> destroy<span style="color: #806030;">(</span><span style="color: #806030;">)</span> <span style="color: #806030;">{</span><span style="color: #806030;">}</span>
-
-<span style="color: #806030;">}</span>
-</pre>
+ public void destroy() {}
+ 
+}
+```
 
 ## Puntuación rápida
 
