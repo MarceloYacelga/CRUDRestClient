@@ -49,19 +49,19 @@
             </div>
             <div class="panel" id="c_alumno" data-title="Create Alumno">
                 <h1>Create Alumno</h1>
+                <div class="container">
                  <form>
-                  <div>
-                    <label for="c_al_nombre">Nombre del alumno:</label>
-                    <input type="text" id="c_al_nombre">
+                  <div class="form-group">
+                    <input type="text" id="c_al_nombre" class="form-control" placeholder="Nombre del Alumno" >
                   </div>
-                  <div>
-                    <label for="c_al_apellidos">Apellidos del alumno:</label>
-                    <input type="text" id="c_al_apellidos">
+                  <div class="form-group">
+                    <input type="text" id="c_al_apellidos" class="form-control" placeholder="Apellidos del Alumno"  >
                   </div>
-                  <div>
-                    <button class="btn btn-danger" onclick="AlumnoCreateREST()">Enviar!</button>
+                  <div class="form-group">
+                    <div class="btn btn-danger" onclick="$.alumno.AlumnoCreateREST()">Enviar!</div>
                   </div>
                 </form>
+                </div>
             </div>
             <div class="panel" id="r_alumno" data-title="Read Alumno">
                 <h1>Read Alumno</h1>
@@ -71,6 +71,9 @@
             </div>
             <div class="panel" id="d_alumno" data-title="Delete Alumno">
                 <h1>Delete Alumno</h1>
+            </div>
+            <div class="panel" id="err_alumno" data-title="ERROR">
+                <h1>Panel para la gestión de errores</h1>
             </div>
         </div>
 
@@ -83,10 +86,10 @@
                     <div class="panel active" id="navPage1" data-title="Foobar">
                         <ul class="list">
                             <li><a href="#main" onclick="$.afui.clearHistory()">Inicio</a></li>
-                            <li><a href="#c_alumno" onclick="$.afui.clearHistory();alumno.AlumnoCreateREST();">Crear Alumno</a></li>
-                            <li><a href="#r_alumno" onclick="$.afui.clearHistory();alumno.AlumnoReadREST();">Leer Alumno</a></li>
-                            <li><a href="#u_alumno" onclick="$.afui.clearHistory();alumno.AlumnoUpdateREST()">Actualizar Alumno</a></li>
-                            <li><a href="#d_alumno" onclick="$.afui.clearHistory();alumno.AlumnoDeleteREST()">Borrar Alumno</a></li>
+                            <li><a href="#c_alumno" onclick="$.afui.clearHistory();$.alumno.AlumnoCreateREST();">Crear Alumno</a></li>
+                            <li><a href="#r_alumno" onclick="$.afui.clearHistory();$.alumno.AlumnoReadREST();">Leer Alumno</a></li>
+                            <li><a href="#u_alumno" onclick="$.afui.clearHistory();$.alumno.AlumnoUpdateREST()">Actualizar Alumno</a></li>
+                            <li><a href="#d_alumno" onclick="$.afui.clearHistory();$.alumno.AlumnoDeleteREST()">Borrar Alumno</a></li>
                         </ul>
                     </div>
                 </div>

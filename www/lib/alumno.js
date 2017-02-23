@@ -1,17 +1,19 @@
 /*jslint browser:true, devel:true, white:true, vars:true */
 /*global $:false, intel:false */
+// variables para el jslint
+$.alumno={};
+// Configuración del HOST y URL del servicio
+$.alumno.HOST = 'http://localhost:8080';
+// $.alumno.URL = '/GA-JPA/webresources/com.iesvdc.acceso.entidades.alumno';
+$.alumno.URL = '/GAREST/webresources/com.iesvdc.acceso.entidades.alumno';
 
-var alumno; 
-
-alumno.HOST = 'http://localhost:8080';
-alumno.URL = '/GA-JPA/webresources/com.iesvdc.acceso.entidades.alumno';
-
-alumno.AlumnoReadREST = function(id) {
-    if ( id=== undefined ) {
+$.alumno.AlumnoReadREST = function(id) {
+    if ( id === undefined ) {
         $.ajax({
-            url: alumno.HOST+alumno.URL,
+            url: this.HOST+this.URL,
             type: 'GET',
             dataType: 'json',
+            contentType: 'application/json',
             success: function (json) {
                 $('#r_alumno').empty();
                 $('#r_alumno').append('<h3>Listado de Alumnos</h3>');
@@ -19,10 +21,9 @@ alumno.AlumnoReadREST = function(id) {
 
                 table.append($('<thead />').append($('<tr />').append('<th>id</th>', '<th>nombre</th>', '<th>apellidos</th>')));
                 var tbody = $('<tbody />');
-                for (var alumno in json) {
-                    console.log(alumno);
-                    tbody.append($('<tr />').append('<td>' + json[alumno].id + '</td>',
-                                '<td>' + json[alumno].nombre + '</td>', '<td>' + json[alumno].apellido + '</td>'));
+                for (var clave in json) {
+                    tbody.append($('<tr />').append('<td>' + json[clave].id + '</td>',
+                                '<td>' + json[clave].nombre + '</td>', '<td>' + json[clave].apellido + '</td>'));
                 }
                 table.append(tbody);
 
@@ -44,16 +45,96 @@ alumno.AlumnoReadREST = function(id) {
                 
             },
             error: function (xhr, status) {
-                
+                this.error('Imposible leer alumno','Compruebe su conexión e inténtelo de nuevo más tarde');
             }
         });
     }
 };
 
-alumno.AlumnoCreateREST = function(){
-    var alumno = {
+$.alumno.AlumnoCreateREST = function(){
+    var datos = {
         'nombre' : $("#c_al_nombre").val(),
         'apellido': $("#c_al_apellidos").val()
     };
     
+    // comprobamos que en el formulario haya datos...
+    if ( datos.nombre.length>2 && datos.apellido.length>2 ) {
+        $.ajax({
+            url: $.alumno.HOST+$.alumno.URL,
+            type: 'POST',
+            dataType: 'json',
+            contentType: "application/json",
+            data: JSON.stringify(datos),
+            success: function(result,status,jqXHR ) {
+               // probamos que se ha actualizado cargando de nuevo la lista -no es necesario-
+                $.alumno.AlumnoReadREST();
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                $.alumno.error('Error: Alumno Create','No ha sido posible crear el alumno. Compruebe su conexión.');
+            }
+        });
+        
+        // esto es para que no vaya hacia atrás (que no salga el icono volver atrás en la barra de menú) 
+        $.afui.clearHistory();
+        // cargamos el panel con id r_alumno.
+        $.afui.loadContent("#r_alumno",false,false,"up");
+    }
+    
+};
+
+$.alumno.AlumnoDeleteREST = function(id){
+    // si pasamos el ID directamente llamamos al servicio DELETE
+    // si no, pintamos el formulario de selección para borrar.
+    if ( id !== undefined ) {
+        id = $('#d_al_sel').val();
+        $.ajax({
+            url: $.alumno.HOST+$.alumno.URL+'/'+id,
+            type: 'DELETE',
+            dataType: 'json',
+            contentType: "application/json",
+            // data: JSON.stringify(datos),
+            success: function(result,status,jqXHR ) {
+               // probamos que se ha actualizado cargando de nuevo la lista -no es necesario-
+                $.alumno.AlumnoReadREST();
+                // esto es para que no vaya hacia atrás (que no salga el icono volver atrás en la barra de menú) 
+                $.afui.clearHistory();
+                // cargamos el panel con id r_alumno.
+                $.afui.loadContent("#r_alumno",false,false,"up");
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                $.alumno.error('Error: Alumno Create','No ha sido posible crear el alumno. Compruebe su conexión.');
+            }
+        });    
+    } else{
+        $.ajax({
+            url: this.HOST+this.URL,
+            type: 'GET',
+            dataType: 'json',
+            contentType: 'application/json',
+            success: function (json) {
+                $('#d_alumno').empty();
+                var formulario = $('<div />');
+                formulario.addClass('container');
+                var select = $('<select id="d_al_sel" />');
+                select.addClass('form-group');
+                for (var clave in json){
+                    select.append('<option value="'+json[clave].id+'">'+json[clave].nombre+' ' + json[clave].apellido+'</option>');
+                }
+                formulario.append(select);
+                formulario.append('<div class="btn btn-danger" onclick="$.alumno.AlumnoDeleteREST(1)"> eliminar! </div>');
+                $('#d_alumno').append(formulario).append(select);
+            }
+        });
+    }
+    
+};
+
+$.alumno.error = function(title, msg){
+    $('#err_alumno').empty();
+    $('#err_alumno').append('<h3>'+title+'</h3>');
+    $('#err_alumno').append('<p>'+msg+'</p>');
+    // esto es para que no vaya hacia atrás (que no salga el icono volver atrás en la barra de menú) 
+    $.afui.clearHistory();
+    // cargamos el panel con id r_alumno.
+    $.afui.loadContent("#err_alumno",false,false,"up");
 };

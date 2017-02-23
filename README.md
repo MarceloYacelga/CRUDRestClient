@@ -17,18 +17,27 @@ puedes encontrar [en este otro repositorio](https://github.com/juangualberto/GA-
 
 ## Documentación
 
-Nos basta con una escueta documentación, aunque sí vamos a necesitar varios diagramas que detallamos a continuación.
+Nos basta con una escueta documentación, aunque sí vamos a necesitar varios diagramas que detallamos a continuación. 
+Veamos unos ejemplos con el proyecto que hemos estado usando en clase (Gestión Académica).
 
 ### Casos de uso
+
+Un caso de uso no es más que plasmar ejemplos de cómo los actores (usuarios 
+de nuestro sistema) interactúan con nuestra aplicación. Esto nos ayudará 
+a dividir el problema en cada una de sus partes.
 
 ![](Screenshot_20170219_215302.png)
 
 ### Diagrama entidad/relación
 
+El diagrama entidad/relación es el paso previo al diseño de tablas de la 
+base de datos y nunca debe faltar en la fase de diseño.
 ![](Captura%20de%20pantalla_2017-02-19_21-48-56.png)
 
 ### Diagrama de clases
 
+Otro diagrama fundamental en UML es el diagrama de clases. En el vemos los objetos que habrá en nuestra aplicación y cómo 
+interactuarán entre ellos. 
 ![](Screenshot_20170219_215403.png)
 
 ### Manual de instalación y configuración
@@ -51,14 +60,15 @@ Basta con explicar las funcionalidades del sistema.
 
 #### Creación de la base de datos, usuarios y las tablas
 
-Creación de la base de datos y carga inicial: 
+Creación de la base de datos y carga inicial: ***Videotutorial en Youtube*** 
 [![Creación de la base de datos y carga inicial](http://img.youtube.com/vi/pPQ5Ul2-RFs/0.jpg)](http://www.youtube.com/watch?v=pPQ5Ul2-RFs)
 
 Código fuente: [CargaInicial.sql](https://github.com/juangualberto/GA-JPA/blob/master/src/java/CargaInicial.sql)
 
 #### Creación del servicio REST con Netbeans
 
-Videotutorial: 
+***Videotutorial en Youtube***: 
+
 [![Creación del servicio REST](http://img.youtube.com/vi/kZQ60EW6gLg/0.jpg)](http://www.youtube.com/watch?v=kZQ60EW6gLg)
 
 ## Creación del cliente
