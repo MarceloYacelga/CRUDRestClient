@@ -102,7 +102,7 @@ $.alumno.AlumnoDeleteREST = function(id){
                 $.afui.loadContent("#r_alumno",false,false,"up");
             },
             error: function(jqXHR, textStatus, errorThrown){
-                $.alumno.error('Error: Alumno Create','No ha sido posible crear el alumno. Compruebe su conexión.');
+                $.alumno.error('Error: Alumno Delete','No ha sido posible borrar el alumno. Compruebe su conexión.');
             }
         });    
     } else{
@@ -123,10 +123,55 @@ $.alumno.AlumnoDeleteREST = function(id){
                 formulario.append(select);
                 formulario.append('<div class="btn btn-danger" onclick="$.alumno.AlumnoDeleteREST(1)"> eliminar! </div>');
                 $('#d_alumno').append(formulario).append(select);
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                $.alumno.error('Error: Alumno Delete','No ha sido posible conectar al servidor. Compruebe su conexión.');
             }
         });
     }
     
+};
+
+$.alumno.AlumnoUpdateREST = function(id, envio){
+    if ( id === undefined ) {
+        $.ajax({
+            url: this.HOST+this.URL,
+            type: 'GET',
+            dataType: 'json',
+            contentType: 'application/json',
+            success: function (json) {
+                $('#u_alumno').empty();
+                $('#u_alumno').append('<h3>Pulse sobre un alumno</h3>');
+                var table = $('<table />').addClass('table table-stripped');
+
+                table.append($('<thead />').append($('<tr />').append('<th>id</th>', '<th>nombre</th>', '<th>apellidos</th>')));
+                var tbody = $('<tbody />');
+                for (var clave in json) {
+                    // le damos a cada fila un ID para luego poder recuperar los datos para el formulario en el siguiente paso
+                    tbody.append($('<tr id="fila_'+json[clave].id+'" onclick="$.alumno.UpdateREST('+json[clave].id+')"/>').append('<td>' + json[clave].id + '</td>',
+                    '<td>' + json[clave].nombre + '</td>', '<td>' + json[clave].apellido + '</td>'));
+                }
+                table.append(tbody);
+
+                $('#u_alumno').append( $('<div />').append(table) );
+                $('tr:odd').css('background','#CCCCCC');
+            },
+            error: function (xhr, status) {
+                $.alumno.error('Error: Alumno Update','Ha sido imposible conectar al servidor.');
+            }
+        });
+    } else if (envio === undefined ){
+        $("#u_al_id").val($("fila_"+id+" > td")[0].html());
+        $("#u_al_nombre").val($("fila_"+id+" > td")[1].html());
+        $("#u_al_apellidos").val($("fila_"+id+" > td")[2].html());
+        // esto es para que no vaya hacia atrás (que no salga el icono volver atrás en la barra de menú) 
+        $.afui.clearHistory();
+        // cargamos el panel con id r_alumno.
+        $.afui.loadContent("#uf_alumno",false,false,"up");
+    } else {
+        //HACEMOS LA LLAMADA REST
+        
+    }
 };
 
 $.alumno.error = function(title, msg){
