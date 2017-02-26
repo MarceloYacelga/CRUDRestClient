@@ -148,7 +148,7 @@ $.alumno.AlumnoUpdateREST = function(id, envio){
                 var tbody = $('<tbody />');
                 for (var clave in json) {
                     // le damos a cada fila un ID para luego poder recuperar los datos para el formulario en el siguiente paso
-                    tbody.append($('<tr id="fila_'+json[clave].id+'" onclick="$.alumno.UpdateREST('+json[clave].id+')"/>').append('<td>' + json[clave].id + '</td>',
+                    tbody.append($('<tr id="fila_'+json[clave].id+'" onclick="$.alumno.AlumnoUpdateREST('+json[clave].id+')"/>').append('<td>' + json[clave].id + '</td>',
                     '<td>' + json[clave].nombre + '</td>', '<td>' + json[clave].apellido + '</td>'));
                 }
                 table.append(tbody);
@@ -161,16 +161,48 @@ $.alumno.AlumnoUpdateREST = function(id, envio){
             }
         });
     } else if (envio === undefined ){
-        $("#u_al_id").val($("fila_"+id+" > td")[0].html());
-        $("#u_al_nombre").val($("fila_"+id+" > td")[1].html());
-        $("#u_al_apellidos").val($("fila_"+id+" > td")[2].html());
+        var seleccion = "#fila_"+id+" td";
+        var al_id = ($(seleccion))[0];
+        var al_nombre = ($(seleccion))[1];
+        var al_apellidos = ($(seleccion))[2];
+        
+        $("#u_al_id").val(al_id.childNodes[0].data);
+        $("#u_al_nombre").val(al_nombre.childNodes[0].data);
+        $("#u_al_apellidos").val(al_apellidos.childNodes[0].data);
         // esto es para que no vaya hacia atrás (que no salga el icono volver atrás en la barra de menú) 
         $.afui.clearHistory();
         // cargamos el panel con id r_alumno.
         $.afui.loadContent("#uf_alumno",false,false,"up");
     } else {
         //HACEMOS LA LLAMADA REST
-        
+            var datos = {
+                'id' : $("#u_al_id").val(),
+                'nombre' : $("#u_al_nombre").val(),
+                'apellido': $("#u_al_apellidos").val()
+            };
+
+            // comprobamos que en el formulario haya datos...
+            if ( datos.nombre.length>2 && datos.apellido.length>2 ) {
+                $.ajax({
+                    url: $.alumno.HOST+$.alumno.URL+'/'+$("#u_al_id").val(),
+                    type: 'PUT',
+                    dataType: 'json',
+                    contentType: "application/json",
+                    data: JSON.stringify(datos),
+                    success: function(result,status,jqXHR ) {
+                       // probamos que se ha actualizado cargando de nuevo la lista -no es necesario-
+                        $.alumno.AlumnoReadREST();
+                    },
+                    error: function(jqXHR, textStatus, errorThrown){
+                        $.alumno.error('Error: Alumno Create','No ha sido posible crear el alumno. Compruebe su conexión.');
+                    }
+                });
+
+                // esto es para que no vaya hacia atrás (que no salga el icono volver atrás en la barra de menú) 
+                $.afui.clearHistory();
+                // cargamos el panel con id r_alumno.
+                $.afui.loadContent("#r_alumno",false,false,"up");
+            }
     }
 };
 
