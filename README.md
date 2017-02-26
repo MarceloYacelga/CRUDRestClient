@@ -15,6 +15,9 @@ En cuanto al cliente, deberá ser en HTML5+JS (concretamente jQuery) y comunicar
 El código de ejemplo para crear el servicio así como la base de datos lo 
 puedes encontrar [en este otro repositorio](https://github.com/juangualberto/GA-JPA).
 
+*** RECOMENDAMOS MONTAR EL SERVICIO SOBRE GLASHFISH 4.1 ***. Glashfish 4.1.1 tiene un bug que da problemas a la hora de producir / consumir JSON. Tomcat no es un contenedor EJB, luego no van a funcionar todas las inyeccciones y tedremos que tocar el código generado por Netbeans.
+
+
 ## Documentación
 
 Nos basta con una escueta documentación, aunque sí vamos a necesitar varios diagramas que detallamos a continuación. 
